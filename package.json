@@ -1,0 +1,17 @@
+{
+  "name": "playwright-api-starter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Beginner-friendly Playwright API testing starter framework",
+  "scripts": {
+    "mock:api": "node api-mock/server.mjs",
+    "test:api": "playwright test -c playwright.api.config.ts",
+    "test:api:debug": "playwright test -c playwright.api.config.ts --debug",
+    "test:api:payments": "playwright test -c playwright.api.config.ts api/tests/payments"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.9.0",
+    "typescript": "^5.6.3"
+  }
+}
