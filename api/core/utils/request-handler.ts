@@ -1,5 +1,6 @@
 import { APIRequest, APIRequestContext, request } from "playwright-core";
 import { expect } from "playwright/test";
+import { APILogger } from "../logger/APILogger";
 
 
 export class RequestHandler{
@@ -11,9 +12,9 @@ export class RequestHandler{
     private apiParam: Record<string, string | number | boolean> = {};
     private apiHeaders: Record<string, string> = {};
     private apiBody: Record<string, unknown>  = {}
-    private logger: Logger
+    private logger: APILogger
 
-    constructor(request: APIRequestContext, newURL: string, logger: Logger){
+    constructor(request: APIRequestContext, newURL: string, logger: APILogger){
         this.request = request; 
         this.defaultBaseURL = newURL;
         this.logger = logger;
