@@ -7,7 +7,7 @@ test('Get Test Tags', async({request})=> {
     const APIArticles = await request.get('https://conduit-api.bondaracademy.com/api/tags');
     const responseAPIArticles = await APIArticles.json();
     console.log(responseAPIArticles);
-    expect(APIArticles.status()).toEqual(200);
+    expect(APIArticles.status()).shouldEqual(200);
 })
 
 test('Create and delete artcle', async({request})=> {
@@ -32,7 +32,7 @@ test('Create and delete artcle', async({request})=> {
     )
     const crateArticleJSON = await createArticle.json();
     console.log(crateArticleJSON);
-    expect(createArticle.status()).toEqual(201);
+    expect(createArticle.status()).shouldEqual(201);
 
     // Delete article using the article id - First get article then delete article
     const articleSlug = crateArticleJSON.article.slug;
@@ -44,7 +44,7 @@ test('Create and delete artcle', async({request})=> {
         }
     );
     
-    expect(deleteArticle.status()).toEqual(204);
+    expect(deleteArticle.status()).shouldEqual(204);
     console.log('Article deleted successfully');
 
 })

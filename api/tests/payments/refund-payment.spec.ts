@@ -1,5 +1,5 @@
 import { PaymentBuilder } from '../../core/builders/payment.builder';
-import { test, expect } from '../../core/fixtures/api.fixture';
+import { test, expect } from '../../fixtures/api.fixture';
 
 test.describe('Refunds API', () => {
   test('refunds a payment without exceeding the original amount', async ({ paymentsApi, authToken }) => {

@@ -1,6 +1,6 @@
 import { APIRequest, APIRequestContext, request } from "playwright-core";
 import { expect } from "playwright/test";
-import { APILogger } from "../logger/APILogger";
+import { APILogger } from "./APILogger";
 
 
 // RequestHandler keeps the low-level Playwright request API in one place so tests can
@@ -79,13 +79,12 @@ export class RequestHandler{
         })
         // console.log(response); // Now using cutom logger
         this.logger.logRequest('GET', url, this.apiHeaders)
-
         const actualStatus = response.status();
         const responseJSON = await response.json();
 
-        this.logger.logResponse(statusCode, responseJSON);
+        this.logger.logResponse(actualStatus, responseJSON);
         this.statusCodeValidator(actualStatus, statusCode, this.getRequest)
-        // expect (actualStatus).toEqual(statusCode); // we are using the custom status code validator
+        // expect (actualStatus).shouldEqual(statusCode); // we are using the custom status code validator
 
         return responseJSON;
     }
@@ -103,10 +102,10 @@ export class RequestHandler{
         const actualStatus = response.status();
 
         const responseJSON = await response.json();
-        this.logger.logResponse(statusCode, this.apiBody)
+        this.logger.logResponse(actualStatus, this.apiBody)
 
         this.statusCodeValidator(actualStatus, statusCode, this.getRequest)
-        // expect(actualStatus).toEqual(statusCode)
+        // expect(actualStatus).shouldEqual(statusCode)
         
         return responseJSON;
     }
@@ -124,10 +123,10 @@ export class RequestHandler{
         const actualStatus = response.status();
 
         const responseJSON = await response.json();
-        this.logger.logResponse(statusCode, this.apiBody)
+        this.logger.logResponse(actualStatus, this.apiBody)
 
         this.statusCodeValidator(actualStatus, statusCode, this.getRequest)
-        // expect(actualStatus).toEqual(statusCode)
+        // expect(actualStatus).shouldEqual(statusCode)
         
         return responseJSON;
     }
@@ -143,11 +142,11 @@ export class RequestHandler{
         this.logger.logRequest('POST', url, this.apiHeaders, this.apiBody);
         const actualStatus = response.status();
 
-        const responseJSON = await response.json();
-        this.logger.logResponse(statusCode, this.apiBody)
+        // const responseJSON = await response.json(); NO RESPONSE IN CASE OF DELETE
+        this.logger.logResponse(actualStatus, this.apiBody)
 
         this.statusCodeValidator(actualStatus, statusCode, this.getRequest)
-        // expect(actualStatus).toEqual(statusCode)
+        // expect(actualStatus).shouldEqual(statusCode)
     
         // const responseJSON = await response.json();
         // return responseJSON;  // there is nothing to return in the delete

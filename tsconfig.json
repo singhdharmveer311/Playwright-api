@@ -15,6 +15,7 @@
   },
   "include": [
     "playwright.api.config.ts",
+    "api-test.config.ts",
     "api/**/*.ts"
   ]
 }

@@ -1,5 +1,5 @@
 import { PaymentBuilder } from '../../core/builders/payment.builder';
-import { test, expect } from '../../core/fixtures/api.fixture';
+import { test, expect } from '../../fixtures/api.fixture';
 import { PaymentAssertions } from '../../core/assertions/payment.assertions';
 
 test.describe('Payments API', () => {

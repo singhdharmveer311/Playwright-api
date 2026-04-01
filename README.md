@@ -1,5 +1,8 @@
 # Playwright API Starter
 
+Source
+https://udemy.com/course/playwright-api-testing-mastery-with-typescript
+
 This repo is a beginner-first Playwright API testing starter. It gives you a small but real framework structure, a local mock payment API, and a teaching path so you can learn API automation from zero instead of copying patterns blindly.
 
 ## Start Here
@@ -27,19 +30,25 @@ npm run test:api
 ## What This Repo Contains
 
 - `api-mock/`
-  - local API you can test without external systems
+   - local API you can test without external systems
+
 - `api/core/models`
-  - request and response types
+   - request and response types
+
 - `api/core/builders`
-  - reusable payload creation
+   - reusable payload creation
+
 - `api/core/clients`
-  - API abstraction over raw requests
+   - API abstraction over raw requests
+
 - `api/core/fixtures`
-  - shared setup for tests
+   - shared setup for tests
+
 - `api/core/assertions`
-  - reusable business checks
+   - reusable business checks
+
 - `api/tests`
-  - sample happy-path and negative-path tests
+   - sample happy-path and negative-path tests
 
 ## Framework Flow
 
@@ -52,13 +61,16 @@ That is the core mental model you need before scaling the framework.
 ## Commands
 
 - `npm run mock:api`
-  - starts the local mock API
+   - starts the local mock API
+
 - `npm run test:api`
-  - runs the Playwright API suite
+   - runs the Playwright API suite
+
 - `npm run test:api:payments`
-  - runs only the payment specs
+   - runs only the payment specs
+
 - `npm run test:api:debug`
-  - runs the suite in Playwright debug mode
+   - runs the suite in Playwright debug mode
 
 ## Recommended Learning Rule
 

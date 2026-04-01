@@ -1,5 +1,6 @@
-import {test} from '../../core/fixtures/bondar.fixture'
-import {APILogger, Logger} from '../../core/logger/APILogger'
+import {test} from '../../fixtures/bondar.fixture'
+import {APILogger} from '../../utils/APILogger'
+import { expect } from '../../utils/custom-expect'
 
 let authToken: string; 
 
@@ -15,7 +16,18 @@ test.beforeAll('Get Auth Token', async({api})=>{
 test('Get Test Tags', async({api})=> {
     const response = await api
                     .path('/tags')
-                    .getRequest(201)
+                    .getRequest(200)
+    expect(response.tags.length).toBeLessThanOrEqual(10)
+
+})
+
+test('Get Articles', async({api})=> {
+    const response = await api
+                    .path('/articles')
+                    .param({limit: 10, offset: 0})
+                    .getRequest(200)
+    expect(response.articles.length).customShouldBeLessThanOrEqual(50)
+    expect(response.articlesCount).shouldEqual(10)
 })
 
 test('Get Method Smoke test with request Handler and Fixture', async({api})=> {
@@ -35,7 +47,7 @@ test('Post method smoke test with request handler and fixture', async({api})=>{
     const response = await api
                     .path('/articles')
                     .headers({Authorization: authToken})
-                    .body({"article":{"title":"fads1","description":"asdf","body":"adsfad","tagList":["asdf"]}})
+                    .body({"article":{"title":"fads1111111","description":"asdf","body":"adsfad","tagList":["asdf"]}})
                     .postRequest(201)
 
     console.log(response)
@@ -48,7 +60,7 @@ test('Full Flow - Create, Modify and Delete Article', async({api})=>{
     const createArticle = await api
                     .path('/articles')
                     .headers({authorization: authToken})
-                    .body({"article":{"title":"Full Flow Final","description":"asdf","body":"adsfad","tagList":["asdf"]}})
+                    .body({"article":{"title":"Full1 1","description":"asdf","body":"adsfad","tagList":["asdf"]}})
                     .postRequest(201)
 
     console.log(createArticle)
@@ -59,7 +71,7 @@ test('Full Flow - Create, Modify and Delete Article', async({api})=>{
                     .path(`/articles/${articleSlug}`)
                     .headers({authorization: authToken})
                     .body({"article":{"title":"Full Flow Final - Update","description":"asdf","body":"adsfad","tagList":["asdf"]}})
-                    .putRequest(201)
+                    .putRequest(200)
     
     const updatedrticleSlug = updateArticle.article.slug
 
