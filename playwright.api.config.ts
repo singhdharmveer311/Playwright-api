@@ -7,7 +7,7 @@ export default defineConfig({
   fullyParallel: false,
   workers: 1,
   timeout: 30_000,
-  reporter: 'list',
+  reporter: [['list'],['html']],
   use: {
     baseURL: `http://127.0.0.1:${API_PORT}`,
     extraHTTPHeaders: {

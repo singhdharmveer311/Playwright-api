@@ -11,10 +11,12 @@ export class RequestHandler{
     private apiParam: Record<string, string | number | boolean> = {};
     private apiHeaders: Record<string, string> = {};
     private apiBody: Record<string, unknown>  = {}
+    private logger: Logger
 
-    constructor(request: APIRequestContext, baseURL: string){
+    constructor(request: APIRequestContext, newURL: string, logger: Logger){
         this.request = request; 
-        this.defaultBaseURL = baseURL;
+        this.defaultBaseURL = newURL;
+        this.logger = logger;
     }
     
     url(url: string){
@@ -57,8 +59,11 @@ export class RequestHandler{
         const response = await this.request.get(url, {
             headers: this.apiHeaders
         })
-        // console.log(response);
+        // console.log(response); // Now using cutom logger
+        this.logger.logRequest('GET', url, this.apiHeaders)
+
         const responseJSON = await response.json();
+        this.logger.logResponse(statusCode, this.apiBody);
         expect (response.status()).toEqual(statusCode)
         return responseJSON;
     }
@@ -73,4 +78,28 @@ export class RequestHandler{
         const responseJSON = await response.json();
         return responseJSON;
     }
+
+    async putRequest(statusCode: number){
+        const url = this.getURL();
+        const response = await this.request.put(url, {
+            headers: this.apiHeaders,
+            data: this.apiBody
+        })
+
+        const responseJSON = await response.json();
+        return responseJSON;
+    }
+
+    async deleteRequest(statusCode: number){
+        const url = this.getURL();
+        const response = await this.request.delete(url, {
+            headers: this.apiHeaders,
+        })
+
+        expect(response.status()).toEqual(statusCode)
+        // const responseJSON = await response.json();
+        // return responseJSON;  // there is nothing to return in the delete
+    }
+
+    
 }
