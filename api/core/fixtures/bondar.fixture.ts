@@ -10,8 +10,9 @@ export type TestOptions = {
 export const test = base.extend<TestOptions>({
     api: async({request}, use)=> {
         const defaultBaseURL = 'https://conduit-api.bondaracademy.com/api';
-        const requestHandler = new RequestHandler(request, defaultBaseURL, );
+        const logger = new APILogger();
+        const requestHandler = new RequestHandler(request, defaultBaseURL, logger);
         await use(requestHandler);
     }
 
-})
+}) 

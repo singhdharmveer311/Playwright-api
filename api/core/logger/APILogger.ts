@@ -23,8 +23,10 @@ export class APILogger{
             return `=== ${log.type} ===\n${JSON.stringify(log.data, null, 4)}`
         }).join('\n\n')
 
-        // Returns the raw array right now; return `logs` instead if you want formatted text output.
-        return this.recentLogs;
+        // return `logs` instead if you want formatted text output.
+        return logs;
     }
+
+    
 
 }

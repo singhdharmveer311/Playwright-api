@@ -1,5 +1,5 @@
 import {test} from '../../core/fixtures/bondar.fixture'
-import {Logger} from '../../core/logger/APILogger'
+import {APILogger, Logger} from '../../core/logger/APILogger'
 
 let authToken: string; 
 
@@ -12,6 +12,11 @@ test.beforeAll('Get Auth Token', async({api})=>{
     console.log(authToken)
 })
 
+test('Get Test Tags', async({api})=> {
+    const response = await api
+                    .path('/tags')
+                    .getRequest(201)
+})
 
 test('Get Method Smoke test with request Handler and Fixture', async({api})=> {
 
@@ -67,7 +72,7 @@ test('Full Flow - Create, Modify and Delete Article', async({api})=>{
 
 
 test('Custom Logger test ', ()=>{
-    const logger = new Logger();
+    const logger = new APILogger();
     logger.logRequest('GET', "url", {asjdfads: "asdf"}, "{asdkf: aaa}")
     logger.logResponse(200, "{Foo: bar}")
     const logs = logger.getRecentLogs();

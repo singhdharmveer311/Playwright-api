@@ -63,9 +63,13 @@ export class RequestHandler{
         // console.log(response); // Now using cutom logger
         this.logger.logRequest('GET', url, this.apiHeaders)
 
+        const actualStatus = response.status();
         const responseJSON = await response.json();
-        this.logger.logResponse(statusCode, this.apiBody);
-        expect (response.status()).toEqual(statusCode)
+
+        this.logger.logResponse(statusCode, responseJSON);
+        this.statusCodeValidator(actualStatus, statusCode, this.getRequest)
+        // expect (actualStatus).toEqual(statusCode); // we are using the custom status code validator
+
         return responseJSON;
     }
 
@@ -76,7 +80,15 @@ export class RequestHandler{
             data: this.apiBody
         })
 
+        this.logger.logRequest('POST', url, this.apiHeaders, this.apiBody);
+        const actualStatus = response.status();
+
         const responseJSON = await response.json();
+        this.logger.logResponse(statusCode, this.apiBody)
+
+        this.statusCodeValidator(actualStatus, statusCode, this.getRequest)
+        // expect(actualStatus).toEqual(statusCode)
+        
         return responseJSON;
     }
 
@@ -87,7 +99,15 @@ export class RequestHandler{
             data: this.apiBody
         })
 
+        this.logger.logRequest('PUT', url, this.apiHeaders, this.apiBody);
+        const actualStatus = response.status();
+
         const responseJSON = await response.json();
+        this.logger.logResponse(statusCode, this.apiBody)
+
+        this.statusCodeValidator(actualStatus, statusCode, this.getRequest)
+        // expect(actualStatus).toEqual(statusCode)
+        
         return responseJSON;
     }
 
@@ -97,9 +117,26 @@ export class RequestHandler{
             headers: this.apiHeaders,
         })
 
-        expect(response.status()).toEqual(statusCode)
+        this.logger.logRequest('POST', url, this.apiHeaders, this.apiBody);
+        const actualStatus = response.status();
+
+        const responseJSON = await response.json();
+        this.logger.logResponse(statusCode, this.apiBody)
+
+        this.statusCodeValidator(actualStatus, statusCode, this.getRequest)
+        // expect(actualStatus).toEqual(statusCode)
+    
         // const responseJSON = await response.json();
         // return responseJSON;  // there is nothing to return in the delete
+    }
+
+    private statusCodeValidator(actualStatus: number, expectedStatus: number, callingMethod: Function){
+        if(actualStatus != expectedStatus){
+            const logs = this.logger.getRecentLogs()
+            const error = new Error(`Expected Status from custom logger ${expectedStatus} but got ${actualStatus}\n\n Recent API Activity: \n${logs}`)
+            Error.captureStackTrace(error, callingMethod)
+            throw error
+        }
     }
 
     
